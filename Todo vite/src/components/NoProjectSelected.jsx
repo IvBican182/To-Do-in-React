@@ -1,14 +1,15 @@
 import NoProjectCss from "./NoProjectSelected.module.css";
-import Logo from "../assets/ToDo-logo.png";
+import Logo from "../assets/no-project.png";
 
-export default function NoProjectSelected () {
+//početna stranica koja će se prikazivati ukoliko trenutno ne dodajemo projekt te ukoliko nismo odabrali već kreirani projekt
+export default function NoProjectSelected ({ openProjectForm }) {
     return (
         <div className={NoProjectCss} alt="empty task">
             <img src={Logo}/>
             <h2>Select a project or create a new one !</h2>
             <p>
-                <button>create a project</button>
+                <button onClick ={openProjectForm}>create a project</button>
             </p>
         </div>
     )
-}
+} 

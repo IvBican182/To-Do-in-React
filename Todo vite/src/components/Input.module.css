@@ -1,0 +1,9 @@
+.input {
+    display: flex;
+    gap: 1;
+    my: 2;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    
+}
