@@ -1,7 +1,7 @@
 import ProjectSidebarCSS from "./ProjectSidebar.module.css";
 
 //u sidebaru prikazujemo gumb za dodavanje projekata te izlistane kreirane projekte
-export default function ProjectSidebar ({ openProjectForm, projects }) {
+export default function ProjectSidebar ({ openProjectForm, projects, selectProject }) {
     return (
         <aside className={ProjectSidebarCSS.sidebar}>
             <h2>Your projects</h2>
@@ -13,11 +13,11 @@ export default function ProjectSidebar ({ openProjectForm, projects }) {
                 {projects.map((project) => {
                     return (
                         <li key={project.id}>
-                            <button>{project.title}</button>
+                            <button onClick={() => selectProject(project.id)}>{project.title}</button>
                         </li>
                     )
                     
-                })}
+                })} 
             </ul>
         </aside>
     )

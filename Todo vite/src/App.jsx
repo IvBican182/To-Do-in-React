@@ -3,6 +3,7 @@ import NewProject from './components/NewProject';
 import NoProjectSelected from './components/NoProjectSelected';
 import ProjectSidebar from './components/ProjectSidebar';
 import { useState } from 'react';
+import SelectedProject from './components/SelectedProject';
 
 function App() {
   //Main content stranice će imati 3 moguća prikaza (State-a).
@@ -34,7 +35,7 @@ function App() {
       //kopiramo prijašnji state, stvaramo novi projekt s nasumičnim ID-em
       const projectId = Math.random();
       const newProject = {
-        //u novi projekt kopiramo prijašnje podatke (dakle title, description i date)
+        //u novi projekt kopiramo unesene podatke (dakle title, description i date)
         //dodajemo ID
         ...projectData,
         id: projectId,
@@ -63,19 +64,34 @@ function App() {
    )
   }
 
-  let content;
+  function handleSelectProject (id) {
+    setProjectPageState(prevState => {
+      return {
+        ...prevState,
+        currentStateId: id,
+      }
+    })
+
+  }
+
+  const selectedProject = projectPageState.projectsArray.find((project => project.id === projectPageState.currentStateId))
+
+  let content = <SelectedProject project={selectedProject} />
+ 
   //ukoliko nam je project page state === null otvaramo project formu
   if (projectPageState.currentStateId === null) {
     content = <NewProject saveProject={handleSaveProject} cancelProject ={handleCancelProject}/>
-  } else { //inače otvaramo početnu stranicu
+  } else if (projectPageState.currentStateId === undefined) { 
     content = <NoProjectSelected openProjectForm = {handleOpenProjectForm}/>
   }
+
   
-  //ProjectSidebar komponentna će uvijek biti prikazana stoga je dodajemo direktno u return
+  
+  //let ProjectSidebar komponentna će uvijek biti prikazana stoga je dodajemo direktno u return
   return (
     <main>
       <div className='App'>
-        <ProjectSidebar projects={projectPageState.projectsArray} openProjectForm = {handleOpenProjectForm}/>
+        <ProjectSidebar projects={projectPageState.projectsArray} openProjectForm = {handleOpenProjectForm} selectProject={handleSelectProject}/>
         {content}
       </div>
     </main>

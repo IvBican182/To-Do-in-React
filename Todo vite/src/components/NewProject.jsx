@@ -18,7 +18,7 @@ export default function NewProject ( {cancelProject, saveProject} ) {
         if (enteredTitle.trim() === "" || 
             enteredDescription.trim() === "" || 
             enteredDueDate.trim() === "") {
-             modal.current.open();
+             //modal.current.open();
              return;
         }
         //spremamo unose kao objekt, te podatke ćemo iskoristiti za new Project
