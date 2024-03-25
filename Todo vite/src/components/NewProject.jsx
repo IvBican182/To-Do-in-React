@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import Input from "./Input";
+import NewProjectCSS from "./NewProject.module.css";
 
 //komponenta za dodavanje novog projekta (project form)
 export default function NewProject ( {cancelProject, saveProject} ) {
@@ -31,20 +32,20 @@ export default function NewProject ( {cancelProject, saveProject} ) {
     }
 
     return (
-        <div>
-            <menu>
-                <li>
-                    <button onClick={cancelProject}>cancel</button>
-                </li>
-                <li>
-                    <button onClick={handleSave}>save</button>
-                </li>
-            </menu>
+        <div className={NewProjectCSS.container}>
             <div>
               <Input type="text" ref = {title} label="Title"/>
               <Input ref = {description} label="Description" textarea/>
               <Input type="date" ref = {dueDate} label="Due Date"/>
             </div>
+            <menu className={NewProjectCSS.menu}>
+                <li className={NewProjectCSS.li}>
+                    <button className={NewProjectCSS.button2} onClick={cancelProject}>cancel</button>
+                </li>
+                <li className={NewProjectCSS.li}>
+                    <button className={NewProjectCSS.button1} onClick={handleSave}>save</button>
+                </li>
+            </menu>
         </div>
     
     )

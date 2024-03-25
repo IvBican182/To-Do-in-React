@@ -3,9 +3,9 @@ import InputCSS from "./Input.module.css";
 
 const Input = forwardRef(function Input ({ label, textarea, ...props }, ref) {
     return (
-        <p className={InputCSS.input}>
+        <p>
             <label className={InputCSS.label}>{label}</label>
-            {textarea ? <textarea ref={ref} {...props}/> : <input ref={ref} {...props}/>}
+            {textarea ? <textarea className={InputCSS.input} ref={ref} {...props}/> : <input className={InputCSS.input} ref={ref} {...props}/>}
         </p>
     )
 });

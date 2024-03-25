@@ -74,9 +74,21 @@ function App() {
 
   }
 
+  function handleDeleteProject () {
+    setProjectPageState(prevState => {
+      return {
+        ...prevState,
+        currentStateId: undefined,
+        projectsArray: prevState.projectsArray.filter((project) => project.id !== prevState.currentStateId)
+
+      };
+    });
+    
+  }
+
   const selectedProject = projectPageState.projectsArray.find((project => project.id === projectPageState.currentStateId))
 
-  let content = <SelectedProject project={selectedProject} />
+  let content = <SelectedProject project={selectedProject} deleteProject = {handleDeleteProject}/>
  
   //ukoliko nam je project page state === null otvaramo project formu
   if (projectPageState.currentStateId === null) {
