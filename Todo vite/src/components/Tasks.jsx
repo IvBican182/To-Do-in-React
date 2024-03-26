@@ -6,7 +6,7 @@ export default function Tasks ({ tasks, addTask, deleteTask }) {
             <h2>TASKS</h2>
             <AddNewTask addTask={addTask}/>
            
-            <ul> 
+            <ul>
                 {tasks.map(task => {
                     return (
                         <li key={task.id}>
@@ -15,6 +15,7 @@ export default function Tasks ({ tasks, addTask, deleteTask }) {
                     </li>
                     )
                 })}
+                
             </ul>
         </section>
     )

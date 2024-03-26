@@ -15,7 +15,6 @@ function App() {
   const [projectPageState, setProjectPageState] = useState({
     currentStateId : undefined,
     projectsArray: [],
-    tasks: []
 
   });
 
@@ -42,6 +41,7 @@ function App() {
         //dodajemo ID
         ...projectData,
         id: projectId,
+        //u tasks property spremamo taskove
         tasks: []
       }
 
@@ -96,6 +96,8 @@ function App() {
     
   }
 
+
+
   function handleAddTask (text) {
     setProjectPageState(prevState => {
       const taskId = Math.random();
@@ -104,33 +106,37 @@ function App() {
       projectId: prevState.currentStateId,
       id: taskId,
     }
-      // selectedProject.tasks.push(newTask)
-      // console.log(selectedProject)
+       selectedProject.tasks.push(newTask)
+       console.log(selectedProject)
       return {
         ...prevState,
-        tasks: [...prevState.tasks, newTask]
-        
-        //
-        
-
+  
       }
     })
   }
-
+  
+//tu ne znam šta treba
   function handleDeleteTask (id) {
     setProjectPageState(prevState => {
+      const remainingTasks = selectedProject.tasks.filter((task) => task.id !== id);
+      console.log(remainingTasks)
       return {
         ...prevState,
-        tasks: [...prevState.tasks.filter(task => task.id !== id)]
+        remainingTasks
+        
+        
       }
     })
 
   }
-
   
+  console.log(projectPageState.projectsArray);
 
   //definiramo odabrani projekt, dakle projekt iz projectsArray čiji je ID jednak ID-u trenutnog state ID-a
   const selectedProject = projectPageState.projectsArray.find((project => project.id === projectPageState.currentStateId))
+
+
+  
 
   return (
     <main>
@@ -154,10 +160,9 @@ function App() {
                   <button className='delete-project-btn' onClick={handleDeleteProject}>Delete</button>
                 </p>
             </div>
-          <Tasks 
-          //currentProjectTasks={tasksOfSelectedProject} 
-          tasks={projectPageState.tasks}
-          //projectTasks={selectedProject} 
+          <Tasks  
+          //remainingTasks = {projectPageState.tasks}
+          tasks={selectedProject.tasks}
           addTask={handleAddTask}
           deleteTask={handleDeleteTask}/>
         </div>
