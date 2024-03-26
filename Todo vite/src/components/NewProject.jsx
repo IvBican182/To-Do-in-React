@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Input from "./Input";
-import NewProjectCSS from "./NewProject.module.css";
+import NewProjectCSS from "../css/NewProject.module.css";
 
 //komponenta za dodavanje novog projekta (project form)
 export default function NewProject ( {cancelProject, saveProject} ) {

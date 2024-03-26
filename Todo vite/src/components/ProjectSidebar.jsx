@@ -1,4 +1,4 @@
-import ProjectSidebarCSS from "./ProjectSidebar.module.css";
+import ProjectSidebarCSS from "../css/ProjectSidebar.module.css";
 
 //u sidebaru prikazujemo gumb za dodavanje projekata te izlistane kreirane projekte
 export default function ProjectSidebar ({ openProjectForm, projects, selectProject }) {

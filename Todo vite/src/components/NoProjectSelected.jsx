@@ -1,4 +1,4 @@
-import NoProjectCss from "./NoProjectSelected.module.css";
+import NoProjectCss from "../css/NoProjectSelected.module.css";
 import Logo from "../assets/no-project.png";
 
 

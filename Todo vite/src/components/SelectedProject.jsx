@@ -1,16 +1,16 @@
+import SelectedCSS from "../css/SelectedProject.module.css";
+
+
 //komponenta za naš odabrani projekt (project page)
-export default function SelectedProject ({deleteProject, project }) {
+export default function SelectedProject ({project, children }) {
     return (
-        <>
-        <div>
-            <h2>{project.title}</h2>
-            <p>{project.description}</p>
-            <p>{project.dueDate}</p>
+        <div className={SelectedCSS.container}>
+        <h2>{project.title}</h2>
+        <p>{project.description}</p>
+        <p>{project.dueDate}</p>
+        {children}
         </div>
-        <p>
-            <button onClick={deleteProject}>Delete</button>
-        </p>
-        </>
+       
     )
 
 }

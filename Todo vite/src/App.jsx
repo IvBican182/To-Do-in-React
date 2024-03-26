@@ -3,7 +3,9 @@ import NewProject from './components/NewProject';
 import NoProjectSelected from './components/NoProjectSelected';
 import ProjectSidebar from './components/ProjectSidebar';
 import { useState } from 'react';
+import Tasks from './components/Tasks';
 import SelectedProject from './components/SelectedProject';
+
 
 function App() {
   //Main content stranice će imati 3 moguća prikaza (State-a).
@@ -12,7 +14,8 @@ function App() {
   //projekte ćemo spremati u Array
   const [projectPageState, setProjectPageState] = useState({
     currentStateId : undefined,
-    projectsArray: []
+    projectsArray: [],
+    tasks: []
 
   });
 
@@ -39,6 +42,7 @@ function App() {
         //dodajemo ID
         ...projectData,
         id: projectId,
+        tasks: []
       }
 
 
@@ -63,22 +67,28 @@ function App() {
     }
    )
   }
-
+  
+  //funkcija odabira projekta iz sidebara
   function handleSelectProject (id) {
     setProjectPageState(prevState => {
       return {
         ...prevState,
+        //mijenjamo current state u ID odabranog projekta
         currentStateId: id,
       }
     })
 
   }
-
+  
+  //funkcija za delete projekta
   function handleDeleteProject () {
     setProjectPageState(prevState => {
       return {
         ...prevState,
+        //vraćamo se na početni zaslon
         currentStateId: undefined,
+        //filtriramo projects array na projekte čiji ID nije jednak ID-u trenutno odabranog projekta, samim time će
+        //ostati u sidebaru svi projekti osim odabranog
         projectsArray: prevState.projectsArray.filter((project) => project.id !== prevState.currentStateId)
 
       };
@@ -86,27 +96,74 @@ function App() {
     
   }
 
-  const selectedProject = projectPageState.projectsArray.find((project => project.id === projectPageState.currentStateId))
+  function handleAddTask (text) {
+    setProjectPageState(prevState => {
+      const taskId = Math.random();
+      const newTask = {
+      taskText: text,
+      projectId: prevState.currentStateId,
+      id: taskId,
+    }
+      // selectedProject.tasks.push(newTask)
+      // console.log(selectedProject)
+      return {
+        ...prevState,
+        tasks: [...prevState.tasks, newTask]
+        
+        //
+        
 
-  let content = <SelectedProject project={selectedProject} deleteProject = {handleDeleteProject}/>
- 
-  //ukoliko nam je project page state === null otvaramo project formu
-  if (projectPageState.currentStateId === null) {
-    content = <NewProject saveProject={handleSaveProject} cancelProject ={handleCancelProject}/>
-  } else if (projectPageState.currentStateId === undefined) { 
-    content = <NoProjectSelected openProjectForm = {handleOpenProjectForm}/>
+      }
+    })
+  }
+
+  function handleDeleteTask (id) {
+    setProjectPageState(prevState => {
+      return {
+        ...prevState,
+        tasks: [...prevState.tasks.filter(task => task.id !== id)]
+      }
+    })
+
   }
 
   
-  
-  //let ProjectSidebar komponentna će uvijek biti prikazana stoga je dodajemo direktno u return
+
+  //definiramo odabrani projekt, dakle projekt iz projectsArray čiji je ID jednak ID-u trenutnog state ID-a
+  const selectedProject = projectPageState.projectsArray.find((project => project.id === projectPageState.currentStateId))
+
   return (
     <main>
       <div className='App'>
-        <ProjectSidebar projects={projectPageState.projectsArray} openProjectForm = {handleOpenProjectForm} selectProject={handleSelectProject}/>
-        {content}
+        {/*project sidebar prikazujemo uvijek, stoga će odmah biti u returnu*/}
+        <ProjectSidebar 
+        projects={projectPageState.projectsArray} 
+        openProjectForm = {handleOpenProjectForm} 
+        selectProject={handleSelectProject}/>
+        {/*ukoliko je state === null prikazujemo project formu*/}
+        {projectPageState.currentStateId === null && 
+        <NewProject saveProject={handleSaveProject} cancelProject ={handleCancelProject}/>}
+        {/*ukoliko je state undefined prikazujemo početni zaslon*/}
+        {projectPageState.currentStateId === undefined &&
+        <NoProjectSelected openProjectForm = {handleOpenProjectForm}/>}
+        {/*ukoliko je odabran project, prikazujemo njegovu komponentnu */}
+        {selectedProject && <SelectedProject project={selectedProject}>
+        <div className="project-container">
+            <div>
+                <p>
+                  <button className='delete-project-btn' onClick={handleDeleteProject}>Delete</button>
+                </p>
+            </div>
+          <Tasks 
+          //currentProjectTasks={tasksOfSelectedProject} 
+          tasks={projectPageState.tasks}
+          //projectTasks={selectedProject} 
+          addTask={handleAddTask}
+          deleteTask={handleDeleteTask}/>
+        </div>
+        </SelectedProject>}
       </div>
-    </main>
+    </main> 
   )
 }
 
