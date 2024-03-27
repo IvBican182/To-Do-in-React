@@ -31,17 +31,17 @@ function App() {
    )
   }
 
-  //funkcija koja sprema našu projekt formu
+  //funkcija koja sprema našu projekt formu, tojest sami projekt
   function handleSaveProject (projectData) {
     setProjectPageState(prevState => {
       //kopiramo prijašnji state, stvaramo novi projekt s nasumičnim ID-em
       const projectId = Math.random();
       const newProject = {
         //u novi projekt kopiramo unesene podatke (dakle title, description i date)
-        //dodajemo ID
+        //dodajemo ID te tasks Array
         ...projectData,
         id: projectId,
-        //u tasks property spremamo taskove
+        //u tasks property spremamo taskove (array)
         tasks: []
       }
 
@@ -96,36 +96,34 @@ function App() {
     
   }
 
-
-
+  // funckija za dodavanje taskova
   function handleAddTask (text) {
     setProjectPageState(prevState => {
+      //dodajemo random id broj
       const taskId = Math.random();
       const newTask = {
+      //task text
       taskText: text,
-      projectId: prevState.currentStateId,
       id: taskId,
     }
+       //pushamo task objekt u trenutno odabrani Projekt
        selectedProject.tasks.push(newTask)
        console.log(selectedProject)
       return {
-        ...prevState,
-  
+        ...prevState
       }
     })
   }
   
-//tu ne znam šta treba
+//funkcija za delete taska, prima ID
   function handleDeleteTask (id) {
     setProjectPageState(prevState => {
-      const remainingTasks = selectedProject.tasks.filter((task) => task.id !== id);
-      console.log(remainingTasks)
+      //array.filter će kreirati novi array stoga tu vrijednost spemamo u selectedProject.tasks array
+      //želimo sve taskove čiji ID nije jednak odabranom ID-u spremiti u naš tasks array, stoga će odrabrani biti izbrisan
+      selectedProject.tasks = selectedProject.tasks.filter((task) => task.id !== id);
       return {
-        ...prevState,
-        remainingTasks
-        
-        
-      }
+        ...prevState
+        }
     })
 
   }
@@ -161,7 +159,7 @@ function App() {
                 </p>
             </div>
           <Tasks  
-          //remainingTasks = {projectPageState.tasks}
+          //u Tasks komponentnu šaljemo propse
           tasks={selectedProject.tasks}
           addTask={handleAddTask}
           deleteTask={handleDeleteTask}/>

@@ -14,6 +14,7 @@ export default function ProjectSidebar ({ openProjectForm, projects, selectProje
                 {projects.map((project) => {
                     return (
                         <li className ={ProjectSidebarCSS.li} key={project.id}>
+                            {/*svaki project će ustvari biti gumb na koji možemo kliknuti te otvoriti pojedini project page*/}
                             <button className={ProjectSidebarCSS.projectTitle} onClick={() => selectProject(project.id)}>{project.title}</button>
                         </li>
                     )
